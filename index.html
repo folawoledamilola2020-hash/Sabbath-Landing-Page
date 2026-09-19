@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabbath — The Calendar Shield &amp; Quiet-Time Sanctuary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,450;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-0:#0F172A;
+    --ink-1:#131F38;
+    --paper:#F8FAFC;
+    --muted:#94A3B8;
+    --gold:#F59E0B;
+    --olive:#7A9E3A;
+    --line:rgba(248,250,252,0.10);
+    --line-strong:rgba(248,250,252,0.22);
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink-0);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  .prose{
+    max-width:640px;
+  }
+
+  .center{
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+  }
+
+  /* Boundary line motif: a vertical hairline that "draws" itself,
+     representing the firewall/boundary concept structurally. */
+  .boundary{
+    position:relative;
+    padding-left:28px;
+  }
+  .boundary::before{
+    content:"";
+    position:absolute;
+    left:0; top:6px; bottom:6px;
+    width:1px;
+    background:var(--line-strong);
+    transform:scaleY(0);
+    transform-origin:top;
+    animation:draw 1.1s cubic-bezier(.4,0,.2,1) forwards;
+    animation-delay:.15s;
+  }
+  @keyframes draw{ to{ transform:scaleY(1); } }
+
+  @media (prefers-reduced-motion:reduce){
+    .boundary::before{ animation:none; transform:scaleY(1); }
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .wordmark{
+    font-family:var(--serif);
+    font-weight:560;
+    font-size:19px;
+    letter-spacing:0.01em;
+  }
+  .wordmark span{ color:var(--gold); }
+  nav a{
+    font-size:14px;
+    color:var(--muted);
+    text-decoration:none;
+    margin-left:28px;
+  }
+  nav a:hover{ color:var(--paper); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:104px 0 96px;
+    text-align:center;
+  }
+  .tagline{
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    color:var(--olive);
+    font-weight:600;
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:450;
+    font-size:clamp(34px, 5.4vw, 58px);
+    line-height:1.12;
+    max-width:760px;
+    margin:0 auto 24px;
+    color:var(--paper);
+  }
+  .sub{
+    max-width:520px;
+    margin:0 auto 40px;
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.65;
+  }
+
+  .cta-group{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  .btn{
+    display:inline-block;
+    background:var(--gold);
+    color:#1A1204;
+    font-weight:600;
+    font-size:15.5px;
+    padding:15px 34px;
+    border-radius:3px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 24px -8px rgba(245,158,11,.5); }
+  .btn:focus-visible{ outline:2px solid var(--paper); outline-offset:3px; }
+
+  .btn-note{
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  .trust{
+    margin-top:44px;
+    font-size:13.5px;
+    color:var(--muted);
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{
+    padding:88px 0;
+    border-top:1px solid var(--line);
+  }
+  .eyebrow-num{
+    font-family:var(--serif);
+    font-size:15px;
+    color:var(--gold);
+    margin-bottom:10px;
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:450;
+    font-size:clamp(26px, 3.4vw, 34px);
+    line-height:1.25;
+    margin-bottom:20px;
+    max-width:600px;
+  }
+  .lede{
+    color:var(--muted);
+    font-size:16.5px;
+    line-height:1.75;
+    max-width:600px;
+  }
+  .lede strong{
+    color:var(--paper);
+    font-weight:500;
+  }
+
+  /* ---------- How it works ---------- */
+  .steps{
+    display:flex;
+    flex-direction:column;
+    gap:52px;
+    margin-top:56px;
+  }
+  .step{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:24px;
+    max-width:680px;
+  }
+  .step-num{
+    font-family:var(--serif);
+    font-size:34px;
+    color:var(--olive);
+    line-height:1;
+  }
+  .step h3{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:18px;
+    margin-bottom:8px;
+  }
+  .step p{
+    color:var(--muted);
+    font-size:15.5px;
+    line-height:1.7;
+  }
+
+  /* ---------- Feature table ---------- */
+  .feature-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:56px;
+    max-width:840px;
+  }
+  .feature-table tr{
+    border-top:1px solid var(--line);
+  }
+  .feature-table tr:last-child{
+    border-bottom:1px solid var(--line);
+  }
+  .feature-table td{
+    padding:22px 16px 22px 0;
+    vertical-align:top;
+  }
+  .feature-name{
+    font-family:var(--serif);
+    font-size:17px;
+    color:var(--paper);
+    width:280px;
+    white-space:nowrap;
+  }
+  .feature-desc{
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.65;
+  }
+
+  @media (max-width: 640px){
+    .feature-table, .feature-table tbody, .feature-table tr, .feature-table td{
+      display:block;
+      white-space:normal;
+    }
+    .feature-table tr{ padding:20px 0; }
+    .feature-name{ padding-bottom:6px; }
+    .feature-desc{ padding-top:0; }
+  }
+
+  /* ---------- Privacy ---------- */
+  .privacy{
+    background:var(--ink-1);
+  }
+  blockquote{
+    font-family:var(--serif);
+    font-weight:450;
+    font-style:italic;
+    font-size:clamp(20px, 2.6vw, 26px);
+    line-height:1.55;
+    max-width:680px;
+    color:var(--paper);
+  }
+  blockquote::before{ content:'“'; color:var(--gold); }
+  blockquote::after{ content:'”'; color:var(--gold); }
+
+  /* ---------- Final CTA ---------- */
+  .final{
+    text-align:center;
+  }
+  .final h2{
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  form.waitlist{
+    margin:40px auto 0;
+    max-width:420px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .waitlist input[type="email"]{
+    background:transparent;
+    border:1px solid var(--line-strong);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:15px;
+    padding:15px 16px;
+    border-radius:3px;
+    width:100%;
+  }
+  .waitlist input[type="email"]::placeholder{ color:var(--muted); }
+  .waitlist input[type="email"]:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+  .waitlist .btn{ width:100%; }
+
+  .success{
+    display:none;
+    font-size:15px;
+    color:var(--olive);
+    margin-top:18px;
+  }
+  .success.show{ display:block; }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="wordmark">Sabbath<span>.</span></div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="tagline">YOUR TIME IS YOURS. SET THE BOUNDARY. WE ENFORCE IT.</p>
+    <h1>The Calendar Shield &amp; Quiet-Time Sanctuary for Remote Professionals.</h1>
+    <p class="sub">Sabbath automatically protects your evenings, weekends, and quiet time from work meetings — while keeping your day centered on faith.</p>
+    <div class="cta-group">
+      <a class="btn" href="#waitlist">Join the Beta Waitlist</a>
+      <p class="btn-note">First 100 members receive free lifetime access to Sabbath Pro.</p>
+    </div>
+    <p class="trust">🔒 100% private. Browser-native processing. Zero calendar data tracking or selling.</p>
+  </div>
+  <div class="hero-video-container mt-10 relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900 max-w-4xl mx-auto">
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      poster="/hero-poster.jpg"
+      class="w-full h-auto object-cover rounded-2xl"
+    >
+      <source src="/sabbath-demo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- ========================================================= -->
+
+
+</section><div class="hero-video-container mt-10 relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900 max-w-4xl mx-auto">
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      poster="/hero-poster.jpg"
+      class="w-full h-auto object-cover rounded-2xl"
+    >
+      <source src="/sabbath-demo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- ========================================================= -->
+
+
+</section>
+</section>
+
+<section id="problem">
+  <div class="wrap boundary">
+    <p class="eyebrow-num">The problem</p>
+    <h2>Work shouldn't own your evenings.</h2>
+    <p class="lede">When your workplace lives inside your browser, boundaries blur. Late-night calendar invites arrive, rest gets delayed, and daily quiet time disappears under constant notifications. <strong>You don't need another calendar planner to squeeze in more tasks. You need a Personal Time Firewall.</strong></p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow-num">How it works</p>
+    <h2>Three steps to a protected schedule.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Define your boundaries</h3>
+          <p>Set your work hours, lunch breaks, and Sabbath rest days once. Sabbath monitors your schedule in the background.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Automate boundary enforcement</h3>
+          <p>When an off-hour invite arrives, Sabbath shields your schedule. Choose Automatic Mode to decline off-hour meetings instantly and send three alternative workday slots, or Smart Mode to approve exceptions with one click.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Reclaim your quiet time</h3>
+          <p>Opening a browser tab during off-hours unlocks your New Tab Sanctuary — featuring peaceful scripture, reflection prompts, guided S.O.A.P. journaling, and fasting tracking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <p class="eyebrow-num">Feature highlights</p>
+    <h2>Built to hold the line, gently.</h2>
+    <table class="feature-table">
+      <tbody>
+        <tr>
+          <td class="feature-name">Personal Time Firewall</td>
+          <td class="feature-desc">Blocks calendar conflicts outside your designated work hours.</td>
+        </tr>
+        <tr>
+          <td class="feature-name">Smart alternative suggestions</td>
+          <td class="feature-desc">Finds open slots in your schedule and offers them automatically when declining off-hour meetings.</td>
+        </tr>
+        <tr>
+          <td class="feature-name">New Tab Sanctuary</td>
+          <td class="feature-desc">Replaces distracting browser tabs during rest hours with scripture and reflection tools.</td>
+        </tr>
+        <tr>
+          <td class="feature-name">Fasting &amp; prayer companion</td>
+          <td class="feature-desc">Logs fast duration and maintains an active prayer request list directly in Chrome.</td>
+        </tr>
+        <tr>
+          <td class="feature-name">Emergency keyword override</td>
+          <td class="feature-desc">Allows urgent meetings to bypass the firewall using a custom keyword, like "URGENT."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="privacy" class="privacy">
+  <div class="wrap center">
+    <p class="eyebrow-num" style="text-align:center;">Privacy guarantee</p>
+    <blockquote>Your calendar data belongs to you. Sabbath processes event times locally in your browser. We never sell data, analyze personal notes, or train AI models on your schedule.</blockquote>
+  </div>
+</section>
+
+<section id="waitlist" class="final">
+  <div class="wrap">
+    <h2 style="margin-left:auto;margin-right:auto;">Ready to protect your rest?</h2>
+    <p class="lede" style="margin-left:auto;margin-right:auto;">Join founding remote workers, freelancers, and professionals using Sabbath to build healthier boundaries.</p>
+
+    <form class="waitlist" id="waitlistForm">
+      <label for="email" class="sr-only" style="position:absolute;left:-9999px;">Email address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+      <button type="submit" class="btn">Get Early Access</button>
+    </form>
+    <p class="success" id="successMsg">You're on the list. We'll be in touch before the beta opens.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Sabbath — a quiet place inside a loud browser.
+  </div>
+</footer>
+  
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://vuemnfmruuxnqnpuixwh.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_Hui250i6PNWPlsQcQw4CUA_g-6HCiC6';
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const waitlistForm = document.querySelector('form');
+  const emailInput = document.querySelector('input[type="email"]');
+  const submitButton = document.querySelector('button[type="submit"]');
+
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const userEmail = emailInput ? emailInput.value.trim() : '';
+      if (!userEmail) return;
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerText = 'Reserving your spot...';
+      }
+
+      // 1. Save email to database
+      const { error: dbError } = await supabaseClient
+        .from('waitlist')
+        .insert([{ email: userEmail }]);
+
+      // Stop immediately if a genuine database error occurs (ignores 23505 duplicates)
+      if (dbError && dbError.code !== '23505') { 
+        console.error('Database error:', dbError);
+        alert('Could not save email: ' + dbError.message);
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerText = 'Get Early Access';
+        }
+        return; // Early return stops execution here
+      }
+
+      // 2. Trigger welcome email Edge Function
+      const { error: fnError } = await supabaseClient.functions.invoke('send-welcome-email', {
+        body: { record: { email: userEmail } }
+      });
+
+      if (fnError) {
+        console.error('Welcome email failed:', fnError);
+      }
+
+      // 3. Redirect to welcome page
+      window.location.href = '/welcome.html';
+    });
+  }
+</script>
+  
+</body>
+</html>
