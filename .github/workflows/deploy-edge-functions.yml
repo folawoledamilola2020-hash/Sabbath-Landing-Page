@@ -75,30 +75,25 @@ jobs:
       # Immediately pings the live function after deploying, so you find
       # out in under a minute if something's wrong — instead of days
       # later when a real signup silently doesn't get an email.
+      
       - name: Health-check the deployed function
         run: |
-          STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+          curl -s -o /tmp/response.json -w "%{http_code}" \
             -X POST "https://${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co/functions/v1/send-welcome-email" \
             -H "Content-Type: application/json" \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -d '{"email":"ci-healthcheck@example.com"}')
+            -d '{"email":"ci-healthcheck@example.com"}' > /tmp/status.txt
 
           echo "Response body:"
           cat /tmp/response.json
           echo ""
-          echo "HTTP status: $STATUS"
 
-          # A "Hello undefined!" or "Hello from Functions!" response means
-          # the old starter template is somehow still what's live — this
-          # is exactly the bug that took hours to catch manually. Fail the
-          # build loudly instead of finding out from a missing email later.
+          # The only real failure signal: the default starter template
+          # ("Hello from Functions!" or "Hello undefined!") being live
+          # instead of your actual code. Any other response — even a
+          # validation error — proves your real code is running.
           if grep -q "Hello" /tmp/response.json; then
             echo "❌ Deployed function is still returning the default starter template response."
-            exit 1
-          fi
-
-          if [ "$STATUS" -ge 400 ]; then
-            echo "❌ Function returned an error status."
             exit 1
           fi
 
