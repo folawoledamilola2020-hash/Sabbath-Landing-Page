@@ -46,6 +46,15 @@ jobs:
         with:
           version: latest
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      # Deno's built-in type/syntax checker...
+      - name: Check function code for syntax/type errors
+        run: deno check supabase/functions/send-welcome-email/index.ts
+        
       # Deno's built-in type/syntax checker. This is what would have
       # caught the mismatched-quotes error immediately, with a clear
       # message, instead of a confusing bundler failure.
