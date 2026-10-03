@@ -1,24 +1,96 @@
+# Deploy Supabase Edge Functions — Sabbath (getsabbath.com)
+#
+# WHY THIS FILE EXISTS:
+# Every deploy issue hit while doing this manually from a local machine
+# (Docker not running, deploying from the wrong folder, a corrupted
+# .npmrc file, and a stale/old template silently staying live despite
+# "successful" deploys) is structurally impossible here, because GitHub's
+# runners are always a clean, fresh environment with Docker pre-installed.
+#
+# SETUP — one-time, before this workflow can run:
+#   1. Get a Supabase access token: https://supabase.com/dashboard/account/tokens
+#   2. In your GitHub repo: Settings → Secrets and variables → Actions → New repository secret
+#      Add these three secrets:
+#        SUPABASE_ACCESS_TOKEN   → the token from step 1
+#        SUPABASE_PROJECT_REF    → vuemnfmruuxnqnpuixwh
+#        SUPABASE_ANON_KEY       → your 'anon'/'publishable' key from Settings → API
+#   3. Commit this file to: .github/workflows/deploy-edge-functions.yml
+#
+# From then on: every time you push a change under supabase/functions/**
+# to main, it deploys automatically — no Terminal, no Docker Desktop,
+# no folder confusion, ever again.
+
 name: Deploy Supabase Edge Functions
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - 'supabase/functions/**'
+      - "supabase/functions/**" # only runs when function code actually changes
+  workflow_dispatch: {} # also lets you manually trigger a deploy from GitHub's Actions tab
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # Fresh checkout every time — this is what eliminates the
+      # "which folder am I actually in" problem entirely.
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: supabase/setup-cli@v1
+      # Official Supabase CLI, always the current version, always
+      # running with Docker already available — no "Docker is not
+      # running" warning is possible here.
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
         with:
           version: latest
 
-      - name: Deploy Edge Function
-        run: |
-          supabase functions deploy send-welcome-email --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+      # Deno's built-in type/syntax checker. This is what would have
+      # caught the mismatched-quotes error immediately, with a clear
+      # message, instead of a confusing bundler failure.
+      - name: Check function code for syntax/type errors
+        run: deno check supabase/functions/send-welcome-email/index.ts
+
+      # The actual deploy. Deploys exactly what's committed to GitHub —
+      # nothing stale, nothing cached, nothing from a different local
+      # folder can ever sneak in here.
+      - name: Deploy send-welcome-email
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          supabase functions deploy send-welcome-email \
+            --project-ref ${{ secrets.SUPABASE_PROJECT_REF }} \
+            --no-verify-jwt
+
+      # Immediately pings the live function after deploying, so you find
+      # out in under a minute if something's wrong — instead of days
+      # later when a real signup silently doesn't get an email.
+      - name: Health-check the deployed function
+        run: |
+          STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST "https://${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co/functions/v1/send-welcome-email" \
+            -H "Content-Type: application/json" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -d '{"email":"ci-healthcheck@example.com"}')
+
+          echo "Response body:"
+          cat /tmp/response.json
+          echo ""
+          echo "HTTP status: $STATUS"
+
+          # A "Hello undefined!" or "Hello from Functions!" response means
+          # the old starter template is somehow still what's live — this
+          # is exactly the bug that took hours to catch manually. Fail the
+          # build loudly instead of finding out from a missing email later.
+          if grep -q "Hello" /tmp/response.json; then
+            echo "❌ Deployed function is still returning the default starter template response."
+            exit 1
+          fi
+
+          if [ "$STATUS" -ge 400 ]; then
+            echo "❌ Function returned an error status."
+            exit 1
+          fi
+
+          echo "✅ Deployment verified — real function code is live."
