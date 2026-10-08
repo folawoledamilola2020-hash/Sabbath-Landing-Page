@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sabbath — You're in</title>
+<link rel="icon" type="image/png" href="public/favicon.png">
+<link rel="apple-touch-icon" href="public/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,450;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -44,6 +46,7 @@
   }
 
   .logo{
+    display:flex; align-items:center; justify-content:center;
     text-align:center;
     font-family:var(--serif);
     font-weight:560;
@@ -51,6 +54,7 @@
     margin-bottom:40px;
   }
   .logo span{ color:var(--gold); }
+  .logo img{ border-radius:7px; display:block; margin-right:10px; }
 
   .hero{
     text-align:center;
@@ -319,7 +323,7 @@
 
 <div class="canvas">
 
-  <div class="logo">Sabbath<span>.</span></div>
+  <div class="logo"><img src="public/logo.png" alt="" width="30" height="30">Sabbath<span>.</span></div>
 
   <div class="hero">
     <div class="pill"><span class="dot"></span> Spot #47 Reserved · Pro Lifetime Tier Locked</div>

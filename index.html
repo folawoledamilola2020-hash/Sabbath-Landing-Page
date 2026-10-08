@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sabbath — The Time Shield &amp; Quiet-Time Sanctuary</title>
+<link rel="icon" type="image/png" href="public/favicon.png">
+<link rel="apple-touch-icon" href="public/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,450;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -88,12 +90,14 @@
     justify-content:space-between;
   }
   .wordmark{
+    display:flex; align-items:center;
     font-family:var(--serif);
     font-weight:560;
     font-size:19px;
     letter-spacing:0.01em;
   }
   .wordmark span{ color:var(--gold); }
+  .wordmark img{ border-radius:7px; display:block; margin-right:10px; }
   nav a{
     font-size:14px;
     color:var(--muted);
@@ -337,7 +341,7 @@
 
 <header>
   <div class="wrap">
-    <div class="wordmark">Sabbath<span>.</span></div>
+    <div class="wordmark"><img src="public/logo.png" alt="" width="30" height="30">Sabbath<span>.</span></div>
     <nav>
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
