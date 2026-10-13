@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Sabbath <onboarding@resend.dev>",
+        from: "Sabbath <hello@getsabbath.com>",
         reply_to: "kreativbrillanz@gmail.com",
         to: [email],
         subject: "Welcome to Sabbath!",
@@ -37,6 +37,9 @@ Deno.serve(async (req) => {
     });
 
     const resdata = await resendResponse.json();
+    if (!resendResponse.ok) {
+      console.error("Resend rejected the email:", JSON.stringify(resdata));
+    }
 
     return new Response(JSON.stringify(resdata), {
       status: resendResponse.ok ? 200 : 400,
