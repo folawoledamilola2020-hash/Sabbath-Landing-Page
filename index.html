@@ -357,7 +357,7 @@
     <p class="sub">Set your hours once. Sabbath keeps work tabs out of your evenings, weekends, and quiet time — no willpower required.</p>
     <div class="cta-group">
       <a class="btn" href="https://chromewebstore.google.com/detail/sabbath/jmjpbfooiappfacahjeidahibghhpklo" target="_blank" rel="noopener">Add to Chrome — It's Free</a>
-      <p class="btn-note" style="margin-top:14px;"><a href="#waitlist" style="color:inherit;text-decoration:underline;">or join the waitlist for updates</a></p>
+      <p class="btn-note" style="margin-top:14px;"><a href="#waitlist" style="color:inherit;text-decoration:underline;">or get updates by email</a></p>
     </div>
     <p class="trust">🔒 100% private. Everything runs on your device. Zero tracking or selling of your schedule or journal entries.</p>
   </div>
@@ -456,15 +456,17 @@
 <section id="waitlist" class="final">
   <div class="wrap">
     <h2 style="margin-left:auto;margin-right:auto;">Your rest deserves protection. Start here.</h2>
-    <p class="lede" style="margin-left:auto;margin-right:auto;">Join founding remote workers, freelancers, and professionals using Sabbath to build healthier boundaries.</p>
+    <p class="lede" style="margin-left:auto;margin-right:auto;">Sabbath is free and available now for Chrome. Add it in one click and set your rest time in two minutes.</p>
 
+    <p style="margin:28px 0 38px;"><a class="btn" href="https://chromewebstore.google.com/detail/sabbath/jmjpbfooiappfacahjeidahibghhpklo" target="_blank" rel="noopener">Add to Chrome — It's Free</a></p>
+
+    <p style="margin:0 0 14px;font-size:14.5px;color:var(--muted);">Not on Chrome right now? Leave your email and we'll send updates and new features.</p>
     <form class="waitlist" id="waitlistForm">
       <label for="email" class="sr-only" style="position:absolute;left:-9999px;">Email address</label>
       <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-      <button type="submit" class="btn">Get Early Access</button>
+      <button type="submit" class="btn" style="background:transparent;color:var(--paper);border:1px solid rgba(248,250,252,0.25);">Get Updates</button>
     </form>
-    <p style="margin-top:18px;font-size:14.5px;"><a href="https://chromewebstore.google.com/detail/sabbath/jmjpbfooiappfacahjeidahibghhpklo" target="_blank" rel="noopener" style="color:var(--gold);">Or add Sabbath to Chrome now →</a></p>
-    <p class="success" id="successMsg">You're on the list. We'll be in touch before the beta opens.</p>
+    <p class="success" id="successMsg">You're on the list. We'll send you updates as Sabbath grows.</p>
   </div>
 </section>
 
@@ -495,7 +497,7 @@
 
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.innerText = 'Reserving your spot...';
+        submitButton.innerText = 'Saving...';
       }
 
       // 1. Save email to database
@@ -509,7 +511,7 @@
         alert('Could not save email: ' + dbError.message);
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.innerText = 'Get Early Access';
+          submitButton.innerText = 'Get Updates';
         }
         return; // Early return stops execution here
       }
